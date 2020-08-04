@@ -3,11 +3,10 @@
 const express = require("express");
 const http = require('http');
 const socketio = require('socket.io');
- 
+const path = require('path');
 const socketEvents = require('./web/socket'); 
 const routes = require('./web/routes'); 
 const appConfig = require('./config/app-config'); 
- 
  
 class Server{
  
@@ -20,13 +19,11 @@ class Server{
     appConfig(){        
         new appConfig(this.app).includeConfig();
     }
- 
-    /* Including app Routes starts*/
+
     includeRoutes(){
         new routes(this.app).routesConfig();
         new socketEvents(this.socket).socketConfig();
-    }
-    /* Including app Routes ends*/  
+    } 
  
     appExecute(){
         this.appConfig();
@@ -35,8 +32,12 @@ class Server{
         const port =  process.env.PORT || 4000;
         const host = process.env.HOST || `localhost`;      
  
-        this.http.listen(port, host, () => {
-            console.log(`Listening on http://${host}:${port}`);
+        app.get('/', function (req, res) {
+            res.sendFile(path.join(__dirname, 'index.html'));
+        });
+
+        this.http.listen(port, () => {
+            console.log('Node app is working!');
         });
     }
  
