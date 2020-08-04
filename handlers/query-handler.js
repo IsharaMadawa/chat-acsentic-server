@@ -48,7 +48,7 @@ class QueryHandler {
     return new Promise(async (resolve, reject) => {
       try {
         const [DB, ObjectID] = await this.Mongodb.onConnect();
-        DB.db("db-chat-ascentic").collection("users").findOneAndUpdate(
+        DB.db("db-chat-ascentic").collection("users").findAndModify(
           {
             _id: ObjectID(userId),
           },
