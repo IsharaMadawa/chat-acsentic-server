@@ -31,10 +31,6 @@ class Server{
  
         const port =  process.env.PORT || 4000;
         const host = process.env.HOST || `localhost`;      
- 
-        app.get('/', function (req, res) {
-            res.sendFile(path.join(__dirname, 'index.html'));
-        });
 
         this.http.listen(port, () => {
             console.log('Node app is working!');
