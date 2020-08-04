@@ -48,7 +48,7 @@ class QueryHandler {
     return new Promise(async (resolve, reject) => {
       try {
         const [DB, ObjectID] = await this.Mongodb.onConnect();
-        DB.db("db-chat-ascentic").collection("users").findAndModify(
+        DB.db("db-chat-ascentic").collection("users").findOneAndUpdate(
           {
             _id: ObjectID(userId),
           },
@@ -160,7 +160,7 @@ class QueryHandler {
     return new Promise(async (resolve, reject) => {
       try {
         const [DB, ObjectID] = await this.Mongodb.onConnect();
-        DB.db("db-chat-ascentic").collection("users").update(
+        DB.db("db-chat-ascentic").collection("users").updateOne(
           { _id: ObjectID(data.id) },
           data.value,
           (err, result) => {
@@ -286,7 +286,7 @@ class QueryHandler {
         } else {
           condition._id = ObjectID(userID);
         }
-        DB.db("db-chat-ascentic").collection("users").update(condition, data, (err, result) => {
+        DB.db("db-chat-ascentic").collection("users").updateOne(condition, data, (err, result) => {
           DB.close();
           if (err) {
             reject(err);
